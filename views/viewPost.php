@@ -2,15 +2,24 @@
 
 <div class="container">
    
-    <div >
-        <h4><?= $post['username']?></h4>
-        <h3><?= $post['title']?></h3>
-        <p><?= $post['description']?></p>
-    </div>
-</div>
+<?php
+$viewannonce = Flight::get('afficheannonce'); ?>
 
+<?php foreach($viewannonce as $a):?>
+    <div >
+        <h3><?= $a->getTitle();?></h3>
+        <h4><?= $a->getPosterId();?></h4>
+        <h5><?= $a->getDatePost();?></h5>
+        <p><?= $a->getDescription(); ?></p>
+    </div>
+
+<?php endforeach;?> 
+
+
+</div>
 
 </div>
 
    
 <?php include_once('views/footer.php'); ?>
+

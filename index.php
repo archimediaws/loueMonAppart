@@ -8,12 +8,23 @@
 	session_start();
 
 
+	$bdd = new bddManager();
+	$repoCategories = $bdd->getCategoriesRepository();
+	$affichecategorie = $repoCategories->getAllCategories();
+	Flight::set('affichecategorie', $affichecategorie);
+
+	
+
 	Flight::route('/', function(){
-		Flight::render('header');
+		unset($_SESSION['erreur']);
+		$bdd = new bddManager();
+		$repoAnnonce = $bdd->getAnnonceRepository();
+		$afficheuserannonces = $repoAnnonce->getAllAnnonceByUserId();
+		Flight::set('afficheuserannonces', $afficheuserannonces);
 		Flight::render('accueil');
-		Flight::render('footer');
 	
 	});
+
 
 	Flight::route('/login', function(){
 		Flight::render('login');
@@ -52,6 +63,10 @@
 
 
 	Flight::route('/newPost', function(){
+		$bdd = new bddManager();
+		$repoCategories = $bdd->getCategoriesRepository();
+		$affichecategorie = $repoCategories->getAllCategories();
+		Flight::set('affichecategorie', $affichecategorie);
 		Flight::render('newPost');
 		
 	});
@@ -72,6 +87,13 @@
 
 
 	Flight::route('/viewPost', function(){
+		
+		$bdd = new bddManager();
+
+		$repoAnnonce = $bdd->getAnnonceRepository();
+		$afficheannonce = $repoAnnonce->getAllAnnonce();
+		Flight::set('afficheannonce', $afficheannonce);
+		
 		Flight::render('viewPost');
 		
 	});
@@ -81,7 +103,6 @@
 		unset($_SESSION['erreur']);
 		$service = new ViewPostService();
 		
-	
 	});
 
 

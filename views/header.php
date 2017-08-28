@@ -10,21 +10,33 @@
 		<div class="container">
 		<div id="body-wrapper">
 			<div class="page-header">
-				<h2>LOUE MON APPART</h2>
+				<h2><a href="http://localhost/EcoleDuNum/LOUEMONAPPART/loueMonAppart/">LOUE MON APPART</a></h2>
 				<?php if(empty($_SESSION['user']) == false):?>
 				<div class="btn-group" role="group" aria-label="...">
-					<a href="accueil"><button type="button" class="btn btn-info">Liste des Annonces</button></a>
+					<a href="viewpost"><button type="button" class="btn btn-info">Liste des Annonces</button></a>
+					<a href="http://localhost/EcoleDuNum/LOUEMONAPPART/loueMonAppart/"><button type="button" class="btn btn-info">Mes Annonces</button></a>
 					<a href="newPost"><button type="button" class="btn btn-info">Poster une Annonce</button></a>
 					<a href="deconnexion"><button type="button" class="btn btn-warning">Deconnexion</button></a>
 				</div>
                     <br/><br/>
+
+				
                 <div class="form-group" role="group">
-                    <select name="value" class="form-control" style="width: 300px;" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+
+                    <select name="value" class="form-control" style="width: 300px;" >
+                            <option value="">Catégories</option>
+					<?php $viewcategories = Flight::get('affichecategorie');?>	
+					<?php foreach ($viewcategories as $c): ?>
+                            <option value="<?= $c->getId();?>"><?= $c->getCategoryName();?></option>
+                    <?php endforeach; ?>
+                    </select>
+
+					<!-- <select name="value" class="form-control" style="width: 300px;" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                             <option value=""></option>
                     <?php //foreach ($categories as $c): ?>
                             <option value="index.php?p=acceuil&categ=<?//= $c['id'] ?>" <?//= !empty($categorySelected) ? ($categorySelected == $c['id'] ? "selected":""):"" ?>><?//= $c['category_name']?></option>
                     <?php //endforeach; ?>
-                    </select>
+                    </select> -->
                 </div>
 				<?php else: ?>
 				<div class="btn-group" role="group" aria-label="...">

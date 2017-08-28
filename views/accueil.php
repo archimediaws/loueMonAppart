@@ -4,21 +4,27 @@
         <strong><?//= $success ?></strong>
     </div>
 <?php //endif; ?>
-
-<?php if(!empty($posts)): ?>
-    <?php foreach($posts as $p): ?>
+<?php $viewuserannonces = Flight::get('afficheuserannonces');?>
+<?php if(!empty($viewuserannonces)): ?>
+    <?php foreach($viewuserannonces as $ua): ?>
     <div id="">
         <div>
             <div class="user-post-header">
-                <a href="" lambdaeverupdated="2"><?=$p['username']?></a> 
+                <a href="#"><?= $ua->getPosterId();?><?= $ua->getTitle();?></a> 
                
                 <div class="user-post-header__label">
-                    <a href="index.php?p=viewPost&postid=<?=$p['id']?>"><?=$p['title']?></a>
+                
+                    <a href="<?= $ua->getId();?>"><?= $ua->getDatePost();?></a>
                 </div>
+
+                <!-- <div class="user-post-header__label">
+                    <a href="index.php?p=viewPost&postid=<?//=$ua['id']?>"><?//=$ua['title']?></a>
+                </div> -->
+
             </div>
             <div>
                 <blockquote>
-                    <?=shortenText($p['description'])?>...
+                    <?= $ua->getDescription();?>...
                 </blockquote>
             </div>
         </div>
@@ -26,8 +32,8 @@
 <?php else: ?>
     <div id="">
     <div>
-        Il n'y a pas d'annonce dans cette catégorie
+        vous n'avez pas encore créé d'annonce
     </div>
     </div>
 <?php endif; ?>
-<?php //include_once('views/footer.php'); ?>
+<?php include_once('views/footer.php'); ?>

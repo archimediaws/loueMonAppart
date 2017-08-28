@@ -31,6 +31,24 @@ class AnnonceRepository
         return $arrayObjet;
     }
 
+    public function getAllAnnonceByUserId(){
+        $userid = $_SESSION['user']->getId();
+        // var_dump($_SESSION['user']);
+        // die();
+        $object = $this->connexion->prepare('SELECT * FROM annonce WHERE poster_id=:poster_id');
+        $object->execute(array(
+            'poster_id'=> $userid
+        ));
+        $annoncesuser = $object->fetchAll(PDO::FETCH_ASSOC);
+        $arrayObjet = [];
+        foreach ($annoncesuser as $auser){
+            $arrayObjet[] = new Annonce($auser);
+        }
+
+        return $arrayObjet;
+    }
+
+
     public function saveAnnonceBdd(Annonce $annonce){
         if(empty($annonce->getId())){
             return $this->insertAnnonce($annonce);
@@ -43,11 +61,11 @@ class AnnonceRepository
         $query="INSERT INTO annonce SET title=:title, description=:description, date_post=:date_post, poster_id=:poster_id, category_id:category_id";
         $pdo = $this->connexion->prepare($query);
         $pdo->execute(array(
-            'title'=>$annonce->getTitre(),
+            'title'=>$annonce->getTitle(),
             'description' => $annonce->getDescription(),
-            'date_post'=>$annonce->getDate(),
-            'poster_id' => $annonce->getPoster(),
-            'category_id' => $annonce->getCategory()
+            'date_post'=>$annonce->getDate_post(),
+            'poster_id' => $annonce->getPoster_id(),
+            'category_id' => $annonce->getCategory_id()
         ));
         return $pdo->rowCount();
     }
@@ -56,11 +74,11 @@ class AnnonceRepository
         $query = 'UPDATE annonce SET title=:title, description=:description, date_post=:date_post, poster_id=:poster_id, category_id:category_id WHERE id=:id';
         $pdo = $this->connexion->prepare($query);
         $pdo->execute(array(
-            'title'=>$annonce->getTitre(),
+            'title'=>$annonce->getTitle(),
             'description' => $annonce->getDescription(),
-            'date_post'=>$annonce->getDate(),
-            'poster_id' => $annonce->getPoster(),
-            'category_id' => $annonce->getCategory(),
+            'date_post'=>$annonce->getDate_post(),
+            'poster_id' => $annonce->getPoster_id(),
+            'category_id' => $annonce->getCategory_id(),
             'id' => $annonce->getId()
         ));
         return $pdo->rowCount();

@@ -5,7 +5,7 @@ class Annonce
     private $id;
     private $titre;
     private $description;
-    private $date;
+    private $date_post;
     private $poster_id;
     private $category_id;
 
@@ -29,13 +29,13 @@ class Annonce
     }
 
    
-    public function getTitre()
+    public function getTitle()
     {
         return $this->titre;
     }
 
    
-    public function setTitre($titre)
+    public function setTitle($titre)
     {
         $this->titre = $titre;
     }
@@ -53,37 +53,37 @@ class Annonce
     }
 
   
-    public function getDate()
+    public function getDatePost()
     {
-        return $this->date;
+        return $this->date_post;
     }
 
  
-    public function setDate($date)
+    public function setDatePost($date_post)
     {
-        $this->date = $date;
+        $this->date_post = $date_post;
     }
 
     
-    public function getPoster()
+    public function getPosterId()
     {
         return $this->poster_id;
     }
 
   
-    public function setPoster($poster_id)
+    public function setPosterId($poster_id)
     {
         $this->poster_id = $poster_id;
     }
 
 
-    public function getCategory()
+    public function getCategoryId()
     {
         return $this->category_id;
     }
 
   
-    public function setCategory($category_id)
+    public function setCategoryId($category_id)
     {
         $this->category_id = $category_id;
     }

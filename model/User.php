@@ -10,6 +10,11 @@ class User
     private $email;
     private $annonce_id;
 
+    public function __construct($donnees=array())
+    {
+        $this->hydrate($donnees);
+
+    }
   
     public function getId()
     {

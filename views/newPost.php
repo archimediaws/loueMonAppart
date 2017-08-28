@@ -27,16 +27,21 @@
             </div>
             
             <div class="form-group">
-            <label>Categorie:</label>
-                <select name="categorie" class="form-control">
-                    <?php //foreach ($categories as $c): ?>
-                        
+            <label>Categories:</label>
+
+            <select name="categorie" class="form-control" >
+                            <option value="">Catégories</option>
+					<?php $viewcategories = Flight::get('affichecategorie');?>	
+					<?php foreach ($viewcategories as $c): ?>
+                            <option value="<?= $c->getId();?>"><?= $c->getCategoryName();?></option>
+                    <?php endforeach; ?>
+                    </select>
+
+                <!-- <select name="categorie" class="form-control">     
                         <option value="1">studio</option>
                         <option value="2">T1</option>
-                        
+                </select> -->
 
-                    <?php //endforeach; ?>
-                </select>
             </div>
             <button class="btn btn-primary" type="submit">Poster</button>
         </form>

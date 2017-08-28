@@ -66,9 +66,9 @@ class LoginService
                 'password' => $password
                 
             ));
-            $user = $objet->fetchAll(PDO::FETCH_ASSOC);
+            $user = $objet->fetch(PDO::FETCH_ASSOC);
             if(empty($user)==false){           
-                return $user;
+                return new user($user);
             }
             return false;
         }

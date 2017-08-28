@@ -10,6 +10,21 @@ class CategoriesRepository
         $this->connexion = $connexion;
     }
 
+
+    public function getAllCategories(){
+        $object = $this->connexion->prepare('SELECT * FROM categories');
+        $object->execute(array());
+        $categories = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($categories as $c){
+            $arrayObjet[] = new Categories($c);
+        }
+
+        return $arrayObjet;
+    }
+
+
+
     public function saveCategoriesBdd(Categories $categories){
         if(empty($categories->getId())){
             return $this->insertCategories($categories);
