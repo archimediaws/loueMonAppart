@@ -33,8 +33,7 @@ class AnnonceRepository
 
     public function getAllAnnonceByUserId(){
         $userid = $_SESSION['user']->getId();
-        // var_dump($_SESSION['user']);
-        // die();
+        
         $object = $this->connexion->prepare('SELECT * FROM annonce WHERE poster_id=:poster_id');
         $object->execute(array(
             'poster_id'=> $userid
@@ -47,6 +46,22 @@ class AnnonceRepository
 
         return $arrayObjet;
     }
+
+    public function getAllAnnonceByCategoryId($categoryid){
+        
+        $object = $this->connexion->prepare('SELECT * FROM annonce WHERE category_id=:category_id');
+        $object->execute(array(
+            'category_id'=> $categoryid
+        ));
+        $annoncescat = $object->fetchAll(PDO::FETCH_ASSOC);
+        $arrayObjet = [];
+        foreach ($annoncescat as $acat){
+            $arrayObjet[] = new Annonce($acat);
+        }
+
+        return $arrayObjet;
+    }
+
 
 
     public function saveAnnonceBdd(Annonce $annonce){

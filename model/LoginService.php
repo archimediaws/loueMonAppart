@@ -30,6 +30,7 @@ class LoginService
         $this->user=$user;
     }
     public function launchControls()
+    
         {
         if(empty($this->params['username'])){
             $this->error['username'] = 'nom utilisateur manquant';
@@ -68,7 +69,7 @@ class LoginService
             ));
             $user = $objet->fetch(PDO::FETCH_ASSOC);
             if(empty($user)==false){           
-                return new user($user);
+                return new User($user);
             }
             return false;
         }

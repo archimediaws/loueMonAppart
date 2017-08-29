@@ -10,6 +10,18 @@ class UserRepository
         $this->connexion = $connexion;
     }
 
+
+    public function getUserById($id){
+        $object = $this->connexion->prepare('SELECT * FROM user WHERE id=:id');
+        $object->execute(array(
+            'id'=>$id
+        ));
+        $userss = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        return new User($users[0]);
+    }
+
+
     public function saveUserBdd(User $user){
         if(empty($user->getId())){
             return $this->insertUser($user);

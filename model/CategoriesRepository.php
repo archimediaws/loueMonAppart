@@ -11,6 +11,19 @@ class CategoriesRepository
     }
 
 
+    public function getCategoryById($id){
+        
+        $object = $this->connexion->prepare('SELECT * FROM categories WHERE id=:id ');
+        $object->execute(array(
+            'id'=>$id
+        ));
+        $categorie = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        return new Categories($categorie[0]);
+    }
+
+
+
     public function getAllCategories(){
         $object = $this->connexion->prepare('SELECT * FROM categories');
         $object->execute(array());

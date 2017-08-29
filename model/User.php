@@ -28,24 +28,24 @@ class User
     }
 
   
-    public function getNom()
+    public function getUsername()
     {
         return $this->nom;
     }
 
   
-    public function setNom($nom)
+    public function setUsername($nom)
     {
         $this->nom = $nom;
     }
 
-    public function getPass()
+    public function getPassword()
     {
         return $this->password;
     }
 
   
-    public function setPass($password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }

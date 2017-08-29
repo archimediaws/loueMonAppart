@@ -1,9 +1,9 @@
 <?php include_once('views/header.php'); ?>
-
+<h2>Toutes les Annonces</h2>
 <div class="container">
    
-<?php
-$viewannonce = Flight::get('afficheannonce'); ?>
+
+<?php $viewannonce = Flight::get('afficheannonce'); ?>
 
 <?php foreach($viewannonce as $a):?>
     <div >
@@ -14,7 +14,6 @@ $viewannonce = Flight::get('afficheannonce'); ?>
     </div>
 
 <?php endforeach;?> 
-
 
 </div>
 

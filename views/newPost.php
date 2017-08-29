@@ -1,8 +1,6 @@
 <?php include_once('views/header.php'); ?>
     <h2>Poster une Annonce</h2>
-    <p>
-        Écrivez votre annonce
-    </p>
+   
 <?php if(!empty($error)): ?>
     <div class="alert alert-danger">
         <strong>Erreur!</strong> <?=$error?>
@@ -10,7 +8,7 @@
 <?php endif; ?>
 <?php if(!empty($success)): ?>
     <div class="alert alert-success">
-        <strong>Vous avez bien été enregistré!</strong> <?=$success?>
+        <strong>Vous avez bien posté votre annonce !</strong> <?=$success?>
     </div>
 <?php endif; ?>
     <div class="container">
@@ -36,11 +34,6 @@
                             <option value="<?= $c->getId();?>"><?= $c->getCategoryName();?></option>
                     <?php endforeach; ?>
                     </select>
-
-                <!-- <select name="categorie" class="form-control">     
-                        <option value="1">studio</option>
-                        <option value="2">T1</option>
-                </select> -->
 
             </div>
             <button class="btn btn-primary" type="submit">Poster</button>

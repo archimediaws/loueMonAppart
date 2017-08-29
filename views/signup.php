@@ -1,7 +1,7 @@
 <?php include_once('views/header.php'); ?>
 <h2>Incription Utilisateur</h2>
 <p>
-    Inscrivez-vous
+    Inscrivez-vous pour consulter ou publier des annonces
 </p>
 <?php if(!empty($error)): ?>
     <div class="alert alert-danger">

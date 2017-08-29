@@ -7,7 +7,7 @@
 
 	session_start();
 
-
+	// hors flight route = affiche les categories dans le header + poster annonce 
 	$bdd = new bddManager();
 	$repoCategories = $bdd->getCategoriesRepository();
 	$affichecategorie = $repoCategories->getAllCategories();
@@ -16,19 +16,24 @@
 	
 
 	Flight::route('/', function(){
+		Flight::render('accueil');
+	});
+
+
+
+	Flight::route('/accueil', function(){
 		unset($_SESSION['erreur']);
 		$bdd = new bddManager();
 		$repoAnnonce = $bdd->getAnnonceRepository();
 		$afficheuserannonces = $repoAnnonce->getAllAnnonceByUserId();
 		Flight::set('afficheuserannonces', $afficheuserannonces);
+
 		Flight::render('accueil');
-	
 	});
 
 
 	Flight::route('/login', function(){
 		Flight::render('login');
-		
 	});
 
 	Flight::route('POST /LoginService', function(){
@@ -38,14 +43,13 @@
 		$service->launchControls();
 		if($service->getError()){
 			$_SESSION['erreur']=$service->getError();
-			Flight::redirect('/');
+			Flight::redirect('/login');
 		}
-		Flight::redirect('/');
+		Flight::redirect('/accueil');
 	});
 
 	Flight::route('/signup', function(){
-		Flight::render('signup');
-		
+		Flight::render('signup');	
 	});
 
 	Flight::route('POST /RegisterService', function(){
@@ -58,7 +62,7 @@
 			Flight::redirect('/');
 		}
 		else
-			Flight::redirect('/');
+			Flight::redirect('/accueil');
 	});
 
 
@@ -68,7 +72,7 @@
 		$affichecategorie = $repoCategories->getAllCategories();
 		Flight::set('affichecategorie', $affichecategorie);
 		Flight::render('newPost');
-		
+	
 	});
 
 	Flight::route('POST /NewPostService', function(){
@@ -81,7 +85,7 @@
 			Flight::redirect('/newPost');
 		}
 		else
-			Flight::redirect('/');
+			Flight::redirect('/accueil');
 	});
 
 
@@ -89,88 +93,42 @@
 	Flight::route('/viewPost', function(){
 		
 		$bdd = new bddManager();
-
 		$repoAnnonce = $bdd->getAnnonceRepository();
 		$afficheannonce = $repoAnnonce->getAllAnnonce();
 		Flight::set('afficheannonce', $afficheannonce);
 		
-		Flight::render('viewPost');
-		
+		Flight::render('viewPost');	
 	});
 
 
-	Flight::route('ViewPostService/@id', function($id){
-		unset($_SESSION['erreur']);
-		$service = new ViewPostService();
+
+	Flight::route('/viewPostByCat/@id', function($id){
 		
+		$bdd = new bddManager();
+		
+				$repoCategories = $bdd->getCategoriesRepository();
+				$affichecat = $repoCategories->getCategoryById($id);
+				Flight::set('affichecat', $affichecat);
+
+		$bdd = new bddManager();
+		
+				$repoAnnonce = $bdd->getAnnonceRepository();
+				$afficheannoncebycat = $repoAnnonce->getAllAnnonceByCategoryId($id);
+				Flight::set('afficheannoncebycat', $afficheannoncebycat);
+
+	
+				Flight::render('viewPostByCat');
 	});
+
+
 
 
 	Flight::route('/deconnexion', function(){
+		unset( $_SESSION['user'] );
 		session_destroy();
+		Flight::render('accueil');
 		Flight::redirect('/');
 	});
 
 	Flight::start();
 
-
-
-	// Inclusion des "model" -> fichiers backend
-	// include_once('model/operations.php');
-	// include_once('model/sessionManager.php');
-	// include_once('model/helpers.php');
-	// include_once('model/requestManager.php');
-
-	/**
-	 * On prend le parametre dans l'url qui va déterminer quelle page on regarde
-	 * J'ai créer un nouveau fichier le request Manager
-	 */
-	// $page = getPageName();
-
-	// switch( $page ) {
-	// 	case 'login':
-	// 		sessionControlOffline();
-	// 		$error = getErrorsForm();
-	// 		include_once('templates/login.php');
-	// 		break;
-	// 	case 'signup':
-	// 		sessionControlOffline();
-	// 		$error = getErrorsForm();
-	// 		$success = getSuccessFromGETRequest();
-	// 		include_once('templates/signup.php');
-	// 		break;
-	// 	case 'acceuil':
-	// 		sessionControlOnline();
-	// 		$success = getSuccessForm();//en provenance du service serviceNewPost
-    //         $categories = getCategories();
-    //         $categorySelected = getCategorySelected();
-    //         if(!empty($categorySelected)){
-    //             $posts = getPostByCateg($categorySelected);
-    //         }else{
-	// 		    $posts = getAllPosts();
-    //         }
-	// 		include_once('templates/accueil.php');
-	// 		break;
-	// 	case 'newPost':
-	// 		sessionControlOnline();
-	// 		$error = getErrorsForm();
-	// 		$myid = getMyId();
-	// 		$categories = getCategories();
-	// 		include_once('templates/newPost.php');
-	// 		break;
-	// 	case 'viewPost':
-	// 		sessionControlOnline();
-	// 		$error = getErrorsForm();
-	// 		$success = getSuccessForm();
-	// 		$myid = getMyId();
-	// 		$postid = getPostIdFromGETRequest();
-	// 		$post = getPostById($postid);
-
-	// 		$comments = getAllCommentsByPostId($postid);
-	// 		include_once('templates/viewPost.php');
-	// 		break;
-	// 	case 'deconnexion':
-	// 		sessionDestroy();
-	// 		break;
-		
-	// }

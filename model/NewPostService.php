@@ -64,7 +64,8 @@ class NewPostService
         public function insertNewAnnonce(){
             // var_dump($this->params['categorie']);
             // die();
-            $iduser = $_SESSION['user'][0]['id'];
+            // $iduser = $_SESSION['user'][0]['id'];
+            $iduser = $_SESSION['user']->getId();
             $date = date('d-m-y');
             
 
