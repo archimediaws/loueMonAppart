@@ -1,7 +1,7 @@
 <?php include_once('views/header.php'); ?>
 <h2>Login</h2>
 <p>
-    Connectez-vous
+    Connectez-vous id= steph mdp= 123
 </p>
 <?php if(!empty($error)): ?>
     <div class="alert alert-danger">
